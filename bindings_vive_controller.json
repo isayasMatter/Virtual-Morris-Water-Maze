@@ -1,5 +1,5 @@
 {
-   "app_key" : "application.generated.unity.steamvr.exe",
+   "app_key" : "application.generated.unity.unvrwatermaze.exe",
    "bindings" : {
       "/actions/buggy" : {
          "sources" : [
@@ -206,6 +206,24 @@
                },
                "mode" : "trigger",
                "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/default/in/move"
+                  }
+               },
+               "mode" : "trackpad",
+               "path" : "/user/hand/left/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/default/in/move"
+                  }
+               },
+               "mode" : "trackpad",
+               "path" : "/user/hand/right/input/trackpad"
             }
          ]
       },
