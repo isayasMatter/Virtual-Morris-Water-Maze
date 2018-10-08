@@ -1,0 +1,21 @@
+{
+   "app_key" : "application.generated.unity.unvrwatermaze.exe",
+   "bindings" : {
+      "/actions/default" : {
+         "sources" : [
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/default/in/move"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/gamepad/input/joystick_left"
+            }
+         ]
+      }
+   },
+   "controller_type" : "gamepad",
+   "description" : "",
+   "name" : "My UNVRWaterMaze [Testing] configuration for Gamepad"
+}

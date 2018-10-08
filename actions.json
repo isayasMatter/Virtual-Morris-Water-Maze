@@ -98,25 +98,29 @@
     {
       "controller_type": "holographic_controller",
       "binding_url": "bindings_holographic_controller.json"
+    },
+    {
+      "controller_type": "gamepad",
+      "binding_url": "application_generated_unity_unvrwatermaze_exe_binding_gamepad.json"
     }
   ],
   "localization": [
     {
       "language_tag": "en_US",
-      "/actions/default/in/InteractUI": "Interact With UI",
-      "/actions/default/in/Teleport": "Teleport",
-      "/actions/default/in/GrabPinch": "Grab Pinch",
-      "/actions/default/in/GrabGrip": "Grab Grip",
-      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
-      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/in/Pose": "Pose",
-      "/actions/default/out/Haptic": "Haptic",
-      "/actions/buggybuddy/in/Steering": "Steering",
-      "/actions/buggybuddy/in/Throttle": "Throttle",
       "/actions/buggybuddy/in/Brake": "Brake",
       "/actions/buggybuddy/in/Reset": "Reset",
-      "/actions/platformer/in/Move": "Move",
-      "/actions/platformer/in/Jump": "Jump"
+      "/actions/buggybuddy/in/Steering": "Steering",
+      "/actions/buggybuddy/in/Throttle": "Throttle",
+      "/actions/default/in/GrabGrip": "Grab Grip",
+      "/actions/default/in/GrabPinch": "Grab Pinch",
+      "/actions/default/in/InteractUI": "Interact With UI",
+      "/actions/default/in/Pose": "Pose",
+      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
+      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
+      "/actions/default/in/Teleport": "Teleport",
+      "/actions/default/out/Haptic": "Haptic",
+      "/actions/platformer/in/Jump": "Jump",
+      "/actions/platformer/in/Move": "Move"
     }
   ]
 }

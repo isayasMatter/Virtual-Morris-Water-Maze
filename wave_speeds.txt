@@ -1,0 +1,6 @@
+Default basic wave speed:
+
+x: 9
+y: 4.5
+z: -8
+w: -3.5
