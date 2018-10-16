@@ -6,6 +6,16 @@ using UnityEngine.UI;
 public class MainManager : MonoBehaviour {
 
 	public Text infoText;
+	public Text participantCode;
+
+	public float trialDuration = 4.0f;
+
+	private bool onTrial;
+	private bool timeOut;
+
+	List<Vector3> playerPathPositions;
+	List<Vector3> platformPathPositions;
+
 	public GameObject infoPanel;
 	public GameObject player;
 	public GameObject platform;
@@ -31,6 +41,11 @@ public class MainManager : MonoBehaviour {
                 OnPlatformFound();
             }
         }
+
+		if(onTrial && !timeOut){
+			playerPathPositions.Add(player.transform.position);
+		}
+
 	}
 
 	void OnEnable(){
@@ -45,13 +60,14 @@ public class MainManager : MonoBehaviour {
 		infoPanel.SetActive(true);		
 		infoText.text = "Congratulations you have found the platform!\nPress the \"Y\" key to continue.";
 		GetComponent<PlayerController>().enabled = false;
-		RotateLandMarks();		
+			
 	}
 
 	void StartPlacementTask(){
 		player.transform.position = new Vector3(0,30,0);
 		player.transform.Rotate(90,0,0);
 		platform.transform.position = new Vector3(0,0,0);
+		RotateLandMarks();	
 		infoText.text = "Please use the joystick to place the platform where it was.\nPress the \"A\" key to confirm.";
 		platform.GetComponent<PlatformMover>().enabled = true;
 	}
