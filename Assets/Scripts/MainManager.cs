@@ -9,6 +9,9 @@ public class MainManager : MonoBehaviour {
 	public Text participantCode;
 
 	public float trialDuration = 4.0f;
+	public int numberOfTrials = 8;
+
+	private int trialCounter;
 
 	private bool onTrial;
 	private bool timeOut;
@@ -30,6 +33,8 @@ public class MainManager : MonoBehaviour {
 	void Start () {
 		audioNotification = GetComponent<AudioSource>();
 		infoText.text = "";
+		trialCounter = numberOfTrials;
+		StartBlock();
 	}
 	
 	// Update is called once per frame
@@ -54,13 +59,18 @@ public class MainManager : MonoBehaviour {
 		OnPlatformFound += StartPlacementTask;
 	}
 
-	void OnPlatformReached(){
-		PlatformController.OnPlatformReached -= OnPlatformReached;
+	void OnPlatformReached(){		
+		
 		audioNotification.Play();
-		infoPanel.SetActive(true);		
-		infoText.text = "Congratulations you have found the platform!\nPress the \"Y\" key to continue.";
-		GetComponent<PlayerController>().enabled = false;
-			
+		// infoPanel.SetActive(true);		
+		// infoText.text = "Congratulations you have found the platform!\nPress the \"Y\" key to continue.";
+		// GetComponent<PlayerController>().enabled = false;
+
+		if(AreThereMoreTrials()){
+			StartTrial();						
+		}else{
+			StartPlacementTask();
+		}			
 	}
 
 	void StartPlacementTask(){
@@ -92,5 +102,36 @@ public class MainManager : MonoBehaviour {
 		infoText.text = "Thank you for placing the platform. \nYou have finished the experiment.";
 		platform.GetComponent<PlatformMover>().enabled = false;
 	}
+
+	void StartBlock(){
+		PositionPlatform();
+
+		if(AreThereMoreTrials()){
+			StartTrial();
+			
+		}else{
+			StartPlacementTask();
+		}
+
+	}
+
+	private bool AreThereMoreTrials()
+    {
+        if(trialCounter > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+	void StartTrial(){
+		trialCounter--;
+		InsertPlayer();		
+	}
+
+	
 
 }
