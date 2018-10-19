@@ -133,6 +133,10 @@ public class MainManager : MonoBehaviour {
 	}
 
 	void InsertPlayer(){
+
+	}
+
+	void PositionPlatform(){
 		
 	}
 	
