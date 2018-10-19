@@ -132,6 +132,9 @@ public class MainManager : MonoBehaviour {
 		InsertPlayer();		
 	}
 
+	void InsertPlayer(){
+		
+	}
 	
 
 }
