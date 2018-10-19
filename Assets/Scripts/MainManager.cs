@@ -29,12 +29,24 @@ public class MainManager : MonoBehaviour {
 	public delegate void PlatformFound();
     public static event PlatformFound OnPlatformFound;
 
+	 
+	public float startTime;    // timer started counting
+    private bool stopTimer;		// is the trial finished?
+    public float elapsed; 	// time elapsed since start of trial
+
+
+    public delegate void TimeOut();
+    public static event TimeOut OnTimeOut;
+
+
 	// Use this for initialization
 	void Start () {
 		audioNotification = GetComponent<AudioSource>();
 		infoText.text = "";
 		trialCounter = numberOfTrials;
 		StartBlock();
+		stopTimer = true;
+		elapsed = 0f;
 	}
 	
 	// Update is called once per frame
@@ -47,6 +59,16 @@ public class MainManager : MonoBehaviour {
             }
         }
 
+		if (!stopTimer)
+        {
+            float currentTime = Time.time;            
+
+            elapsed = currentTime - startTime;
+            if ((elapsed > trialDuration) && (OnTimeOut != null))
+                OnTimeOut();   
+                stopTimer = true;         
+        }
+
 		if(onTrial && !timeOut){
 			playerPathPositions.Add(player.transform.position);
 		}
@@ -57,6 +79,7 @@ public class MainManager : MonoBehaviour {
 		PlatformController.OnPlatformReached += OnPlatformReached;
 		PlatformMover.OnPositionSelected += OnPositionSelected;
 		OnPlatformFound += StartPlacementTask;
+		OnTimeOut += trialTimeOut;		
 	}
 
 	void OnPlatformReached(){		
@@ -129,7 +152,9 @@ public class MainManager : MonoBehaviour {
 
 	void StartTrial(){
 		trialCounter--;
-		InsertPlayer();		
+		InsertPlayer();	
+		startTrialTimer();
+				
 	}
 
 	void InsertPlayer(){
@@ -137,8 +162,27 @@ public class MainManager : MonoBehaviour {
 	}
 
 	void PositionPlatform(){
-		
+
+	}	
+
+	void trialTimeOut(){
+
 	}
-	
+
+	 void startTrialTimer(){
+        startTime = Time.time;
+        stopTimer = false;        
+        elapsed = 0f;
+    }
+
+	void stopTrialTimer(){
+		stopTimer = true;
+	}
+
+	void LoadInsertionPoints(){
+		ExperimentPosition[] insertionPoints;
+		TextAsset insPointsFile = Resources.Load("InsertionPoints") as TextAsset;	
+		insertionPoints = JsonHelper.FromJson<ExperimentPosition>(insPointsFile.text);
+	}
 
 }

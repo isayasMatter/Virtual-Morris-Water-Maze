@@ -1,7 +1,6 @@
-using System;
 
-[Serializable]
-public class Position{
+[System.Serializable]
+public class ExperimentPosition{
 	public int ID;
 	public float posX;
     public float posY;
