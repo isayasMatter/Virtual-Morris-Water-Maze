@@ -1,0 +1,2 @@
+ParticipantID,BlockID,trialID,FOVCondition,StartTime,EndTime,CompletionTime,PlatformLocation.x,PlatformLocation.z,InsertionPoint.x,InsertionPoint.z
+1,1,0,RN,10/25/2018 7:26:16 PM,10/25/2018 7:26:26 PM,10.00463,4,9,0,18

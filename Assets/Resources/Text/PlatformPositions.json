@@ -1,14 +1,28 @@
-{"Items":[
-  {
-    "id": 0,
-    "posX": 0,
-    "posY": 0,
-    "posZ": 0
-  },
+{
+  "Items":[  
   {
     "id": 1,
-    "posX": 1,
+    "posX": 4,
     "posY": 0,
-    "posZ": 1
+    "posZ": 9
+  },
+  {
+    "id": 2,
+    "posX": 8,
+    "posY": 0,
+    "posZ": -12
+  },
+  {
+    "id": 3,
+    "posX": -8,
+    "posY": 0,
+    "posZ": -7
+  },
+  {
+    "id": 4,
+    "posX": -8,
+    "posY": 0,
+    "posZ": 5
   }
-  ]}
+  ]
+}

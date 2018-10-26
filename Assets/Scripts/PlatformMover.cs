@@ -7,6 +7,18 @@ public class PlatformMover : MonoBehaviour{
     public static event PositionSelected OnPositionSelected;
     void Update()
     {
+            
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        {
+            if (OnPositionSelected != null)
+            {
+                
+                OnPositionSelected();
+            }
+        }
+    }
+
+    void FixedUpdate(){
         Vector3 newPos;
         var verticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         if(Mathf.Abs(verticalInput) > 0)
@@ -22,14 +34,6 @@ public class PlatformMover : MonoBehaviour{
             newPos = transform.right * horizontalInput;
             newPos.y = 0;
             transform.position += newPos;
-        }
-    
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
-        {
-            if (OnPositionSelected != null)
-            {
-                OnPositionSelected();
-            }
         }
     }
 
