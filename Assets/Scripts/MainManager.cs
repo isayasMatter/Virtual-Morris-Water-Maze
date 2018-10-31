@@ -78,6 +78,7 @@ public class MainManager : MonoBehaviour {
 		onTrial =  false;
 		audioNotification = GetComponent<AudioSource>();
 
+		participantID = ExperimentSettings.ParticipantID;
 
 		TextAsset insPointsFile = Resources.Load("Text/InsertionPoints") as TextAsset;	
 		insertionPoints = JsonHelper.FromJson<ExperimentPosition>(insPointsFile.text);
