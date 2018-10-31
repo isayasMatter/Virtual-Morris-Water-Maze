@@ -12,11 +12,10 @@ public class MainManager : MonoBehaviour {
 	public GameObject platform;
 	public GameObject platformParent;
 	public GameObject mainCamera;
-
-	public GameObject cameraParent;
-	
-	public GameObject environment;
-	public AudioClip timeOutClip;
+	public GameObject cameraParent;	
+	public GameObject environment;		//all objects except player
+	public List<Texture> LandMarkTextures;
+	public AudioClip timeOutClip;		
 	public AudioClip foundPlatformClip;
 	public List<GameObject> landMarks;
 	
@@ -28,16 +27,19 @@ public class MainManager : MonoBehaviour {
 
 
 	public float trialDuration = 60.0f;
-	public float delayBetweenTrials = 10.0f;
-	public int numberOfTrials = 4;
+	public float delayBetweenTrials = 6.0f;
+	public int numberOfTrials = 6;
+	public int numberOfBlocks = 6;
+
 	public int trialCounter;
 	private bool onTrial;
 	private bool onPlacementTask;
 	private bool timeOut;
 	public static bool onPlatform;
 
-
-	public int numberOfBlocks = 2;
+	public int numberOfLandMarks = 4;
+	private int textureCounter = 0;
+	
 	public int placementTaskelevation = 100;
 	private int blockCounter;
 
@@ -76,6 +78,7 @@ public class MainManager : MonoBehaviour {
 		onTrial =  false;
 		audioNotification = GetComponent<AudioSource>();
 
+
 		TextAsset insPointsFile = Resources.Load("Text/InsertionPoints") as TextAsset;	
 		insertionPoints = JsonHelper.FromJson<ExperimentPosition>(insPointsFile.text);
 
@@ -96,13 +99,6 @@ public class MainManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Joystick1Button3))
-        {
-            if (OnPlatformFound != null)
-            {
-                OnPlatformFound();
-            }
-        }
 
 		if (!stopTimer)
         {
@@ -178,11 +174,17 @@ public class MainManager : MonoBehaviour {
 	void StartPlacementTask(){	
 		onPlacementTask = true;
 		platform.SetActive(true);
-		player.transform.position = new Vector3(0, placementTaskelevation, 0);
-		player.transform.LookAt(platform.transform);
+		player.transform.position = new Vector3(0, placementTaskelevation, 0);	
+		player.transform.eulerAngles = new Vector3(90,0,0);	
+
+		float cameraY = mainCamera.transform.localEulerAngles.y;	
+		Debug.Log(cameraY);	
+		cameraParent.transform.Rotate(0,(360-cameraY),0);
+
 		platformParent.transform.position = new Vector3(0,0,0);
 		//RotateLandMarks();	
 		infoText.text = "Please use the joystick to place the platform where it was.\nPress the \"A\" key to confirm.";
+		//platform.GetComponent<Rigidbody>().
 		platform.GetComponent<PlatformMover>().enabled = true;
 	}
 
@@ -200,6 +202,15 @@ public class MainManager : MonoBehaviour {
 			}
 		}	
 
+	}
+
+	void SetLandMarkTexture(){
+		for(int i=0; i<landMarks.Count; i++){
+			Renderer m_Renderer;
+			m_Renderer =landMarks[i].GetComponent<Renderer>();
+			m_Renderer.material.SetTexture("_MainTex", LandMarkTextures[i+textureCounter]);
+		}
+		textureCounter +=4;
 	}
 
 	void OnPositionSelected(){
@@ -224,7 +235,9 @@ public class MainManager : MonoBehaviour {
 
 		if(AreThereMoreBlocks()){
 			platform.transform.localPosition = Vector3.zero;
+			cameraParent.transform.localRotation = Quaternion.Euler(0,0,0);
 			PositionPlatform();
+			SetLandMarkTexture();
 
 			if(AreThereMoreTrials()){
 				StartTrial();			
@@ -303,7 +316,7 @@ public class MainManager : MonoBehaviour {
 
 	void InsertPlayer(){
 		//read position from file and insert player into next position
-		int insertionPt = blockMappings[blockCounter-1].trials[trialCounter-1];
+		int insertionPt = blockMappings[blockID].trials[trialCounter-1];
 		int x = insertionPoints[insertionPt-1].posX;
 		int z = insertionPoints[insertionPt-1].posZ;
 		Vector3 newPosition = new Vector3(x,0.5f,z);

@@ -2,27 +2,39 @@
   "Items":[  
   {
     "id": 1,
-    "posX": 4,
+    "posX": 5.4,
     "posY": 0,
-    "posZ": 9
+    "posZ": 7.2
   },
   {
     "id": 2,
-    "posX": 8,
+    "posX": 0.5,
     "posY": 0,
-    "posZ": -12
+    "posZ": 1.9
   },
   {
     "id": 3,
-    "posX": -8,
+    "posX": -15,
     "posY": 0,
-    "posZ": -7
+    "posZ": 0.5
   },
   {
     "id": 4,
-    "posX": -8,
+    "posX": -10.2,
     "posY": 0,
-    "posZ": 5
+    "posZ": -8
+  },
+  {
+    "id": 5,
+    "posX": 5.2,
+    "posY": 0,
+    "posZ": -15.1
+  },
+  {
+    "id": 6,
+    "posX": 6.4,
+    "posY": 0,
+    "posZ": -4.8
   }
   ]
 }
