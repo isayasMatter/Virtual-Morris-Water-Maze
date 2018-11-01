@@ -845,6 +845,17 @@ GameObject:
 Transform:
   m_PrefabParentObject: {fileID: 429506, guid: dc06161b6d97feb419f45f03b62e14b9, type: 2}
   m_PrefabInternal: {fileID: 1556507808}
+--- !u!114 &756572437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 756572435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a08b9ad1093f9234fa0e3dbb20af1733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &756572440 stripped
 Camera:
   m_PrefabParentObject: {fileID: 2014920, guid: dc06161b6d97feb419f45f03b62e14b9,
@@ -856,12 +867,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 756572435}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a3ab53bb7766ed489844aa2e4ab71dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refTransform: {fileID: 0}
+  refTransform: {fileID: 756572436}
   minAngVel: 0
   maxAngVel: 180
   minSpeed: 0

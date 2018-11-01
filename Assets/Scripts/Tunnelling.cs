@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Sigtrap.ImageEffects {
 	public class Tunnelling : MonoBehaviour {
 		#region Public Fields
 		[Header("Angular Velocity")]
@@ -119,4 +118,3 @@ namespace Sigtrap.ImageEffects {
 		}
 		#endregion
 	}
-}
