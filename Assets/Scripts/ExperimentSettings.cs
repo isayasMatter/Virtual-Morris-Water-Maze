@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class ExperimentSettings {
-	private static bool experimentType, fovRestriction;
+	private static bool onTraining, fovRestriction;
 	private static string participantID, sessionNumber;
 	
-	public static bool ExperimentType{
+	public static bool OnTraining{
 		get{
-			return experimentType;
+			return onTraining;
 		}
 		set{
-			experimentType = value;
+			onTraining = value;
 		}
 	}
 

@@ -1049,7 +1049,7 @@ MonoBehaviour:
   trialDuration: 20
   delayBetweenTrials: 5
   numberOfTrials: 6
-  numberOfBlocks: 6
+  numberOfBlocks: 1
   trialCounter: 0
   numberOfLandMarks: 4
   placementTaskelevation: 40

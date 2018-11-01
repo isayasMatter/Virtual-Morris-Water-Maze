@@ -7,10 +7,11 @@ using System.Text;
 public class Trajectory {
 
 	public string participantID;
-	public int trialID;
-	public int blockID;
+    public string sessionNumber;
+    public int blockID;
+	public int trialID;	
 	public List<Vector3> trajectoryPositions;
-
+    public List<float> trajectoryTimeStamps;
     public List<Vector3> yawData;
 
 	public void export(){
@@ -30,7 +31,7 @@ public class Trajectory {
         sb.Append("ParticipantID,");
 		sb.Append("BlockID,");
 		sb.Append("trialID,");
-
+        sb.Append("time-stamp,");
         sb.Append("position-x,position-z,");
         sb.Append("head-yaw-x,head-yaw-y,head-yaw-z\n");
         
@@ -40,6 +41,7 @@ public class Trajectory {
             sb.Append(participantID).Append(",");
 		    sb.Append(blockID).Append(",");
 		    sb.Append(trialID).Append(",");
+            sb.Append(trajectoryTimeStamps[index]).Append(",");
             sb.Append(point.x).Append(",").Append(point.z).Append(",");
             sb.Append(yawData[index].x).Append(",").Append(yawData[index].y).Append(",").Append(yawData[index].z).Append("\n");
             index++;

@@ -1492,7 +1492,7 @@ GameObject:
   - component: {fileID: 1467793293}
   - component: {fileID: 1467793294}
   m_Layer: 5
-  m_Name: ExperimentType
+  m_Name: OnTraining
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1848,7 +1848,7 @@ MonoBehaviour:
   participantID: {fileID: 1026182282}
   sessionNumber: {fileID: 1422254164}
   fovRestriction: {fileID: 2047329053}
-  sessionType: {fileID: 1467793294}
+  onTraining: {fileID: 1467793294}
   errorText: {fileID: 565478189}
 --- !u!1 &2045861677
 GameObject:

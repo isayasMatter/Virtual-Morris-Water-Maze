@@ -9,7 +9,7 @@ public class StartExperimentOnClick : MonoBehaviour {
 	public InputField participantID;
 	public InputField sessionNumber;
 	public Toggle fovRestriction;
-	public Toggle sessionType;
+	public Toggle onTraining;
 
 	public Text errorText;
 	// Use this for initialization
@@ -17,13 +17,13 @@ public class StartExperimentOnClick : MonoBehaviour {
 		string pID = participantID.text;
 		string sNo = sessionNumber.text;
 		bool fovR = fovRestriction.isOn;
-		bool sesT = sessionType.isOn;
+		bool onT = onTraining.isOn;
 
 		if((pID != "") && (sNo != "")){
 			ExperimentSettings.ParticipantID = pID;
 			ExperimentSettings.SessionNumber = sNo;
 			ExperimentSettings.FovRestriction = fovR;
-			ExperimentSettings.ExperimentType = sessionType;
+			ExperimentSettings.OnTraining = onT;
 
 			SceneManager.LoadScene(sceneIndex);
 		}else{

@@ -36,6 +36,7 @@ public class MainManager : MonoBehaviour {
 	private bool onPlacementTask;
 	private bool timeOut;
 	public static bool onPlatform;
+	private bool onTraining;
 
 	public int numberOfLandMarks = 4;
 	private int textureCounter = 0;
@@ -47,8 +48,10 @@ public class MainManager : MonoBehaviour {
 	private Trial currentTrial;
 	private Vector3 trialInsertionPoint;
 	List<Vector3> trajectoryPositions;
+	List<float> trajectoryTimeStamps;
 	List<Vector3> yawData;
 	List<Vector3> platformTrajectoryPositions;
+	List<float> platformTrajectoryTimeStamps;
 	private ExperimentPosition[] insertionPoints;
 	private ExperimentPosition[] platformPositions;
 	private Blocks[] blockMappings;
@@ -90,10 +93,18 @@ public class MainManager : MonoBehaviour {
 		blockMappings = JsonHelper.FromJson<Blocks>(blockMapppingsFile.text);		
 
 		trajectoryPositions = new List<Vector3>();
+		trajectoryTimeStamps = new List<float>();
 		yawData = new List<Vector3>();
 		platformTrajectoryPositions = new List<Vector3>();
+		platformTrajectoryTimeStamps = new List<float>();
 
-		infoText.text = "";	
+		infoText.text = "";			
+
+		if(ExperimentSettings.OnTraining){
+			onTraining = true;
+			numberOfBlocks = 1;			
+		}
+
 		blockCounter = numberOfBlocks;	
 		StartBlock();			
 	}
@@ -116,11 +127,13 @@ public class MainManager : MonoBehaviour {
         {
             trajectoryPositions.Add(transform.position);
 			yawData.Add(mainCamera.transform.rotation.eulerAngles);
+			trajectoryTimeStamps.Add(Time.time);
         }
 
 		if (onPlacementTask && Time.frameCount % 10 == 0)
         {
             platformTrajectoryPositions.Add(platform.transform.position);
+			platformTrajectoryTimeStamps.Add(Time.time);
         }
 
 	}
@@ -347,25 +360,28 @@ public class MainManager : MonoBehaviour {
 		StopTrialTimer();
 		onTrial = false;
 
-		Trajectory traj = new Trajectory();
-		traj.participantID = participantID;
-		traj.trialID = trialID;
-		traj.blockID = blockID;
-		traj.trajectoryPositions = trajectoryPositions;
-		traj.yawData = yawData;		
-		traj.export();
+		if(!onTraining){
+			Trajectory traj = new Trajectory();
+			traj.participantID = participantID;
+			traj.trialID = trialID;
+			traj.blockID = blockID;
+			traj.trajectoryPositions = trajectoryPositions;
+			traj.yawData = yawData;		
+			traj.export();
 
-		Trial trial = new Trial();
-		trial.participantID = participantID;
-		trial.trialID = trialID;
-		trial.blockID = blockID;
-		trial.FOVCondition = (FOVRestricted?"RY":"RN");
-		trial.startTime = trialStartTime;
-		trial.endTime = trialStartTime.Add(new System.TimeSpan(0,0,0,(int)elapsed));
-		trial.completionTime = elapsed;
-		trial.platformLocation = platform.transform.position;
-		trial.insertionPoint = trialInsertionPoint;
-		trial.export();
+			Trial trial = new Trial();
+			trial.participantID = participantID;
+			trial.trialID = trialID;
+			trial.blockID = blockID;
+			trial.FOVCondition = (FOVRestricted?"RY":"RN");
+			trial.startTime = trialStartTime;
+			trial.endTime = trialStartTime.Add(new System.TimeSpan(0,0,0,(int)elapsed));
+			trial.completionTime = elapsed;
+			trial.platformLocation = platform.transform.position;
+			trial.insertionPoint = trialInsertionPoint;
+			trial.export();
+		}
+		
 	}
 	 void startTrialTimer(){
         startTime = Time.time;
