@@ -1,40 +1,40 @@
 {
   "Items":[  
-  {
-    "id": 1,
-    "posX": 5.4,
-    "posY": 0,
-    "posZ": 7.2
-  },
-  {
-    "id": 2,
-    "posX": 0.5,
-    "posY": 0,
-    "posZ": 1.9
-  },
-  {
-    "id": 3,
-    "posX": -15,
-    "posY": 0,
-    "posZ": 0.5
-  },
-  {
-    "id": 4,
-    "posX": -10.2,
-    "posY": 0,
-    "posZ": -8
-  },
+    {
+      "id": 1,
+      "posX": 11.03,
+      "posY": 0,
+      "posZ": 8.3
+    },
+    {
+      "id": 2,
+      "posX": 2.2,
+      "posY": 0,
+      "posZ": 12
+    },
+    {
+      "id": 3,
+      "posX": -7.03,
+      "posY": 0,
+      "posZ": 7
+    },
+    {
+      "id": 4,
+      "posX": -7.63,
+      "posY": 0,
+      "posZ": -3.4
+    },
   {
     "id": 5,
-    "posX": 5.2,
+    "posX": 1.3,
     "posY": 0,
-    "posZ": -15.1
+    "posZ": -8.4
   },
   {
     "id": 6,
-    "posX": 6.4,
+    "posX": 11.13,
     "posY": 0,
-    "posZ": -4.8
+    "posZ": -3.8
   }
   ]
 }

@@ -14,6 +14,8 @@ public class MainManager : MonoBehaviour {
 	public GameObject mainCamera;
 	public GameObject cameraParent;	
 	public GameObject environment;		//all objects except player
+
+	public GameObject poolWall;
 	public List<Texture> LandMarkTextures;
 	public AudioClip timeOutClip;		
 	public AudioClip foundPlatformClip;
@@ -21,9 +23,9 @@ public class MainManager : MonoBehaviour {
 	
 
 	public string participantID;
+	public string sessionNumber;
 	public int trialID;
-	public int blockID;
-	public bool FOVRestricted;
+	public int blockID;	
 
 
 	public float trialDuration = 60.0f;
@@ -82,6 +84,7 @@ public class MainManager : MonoBehaviour {
 		audioNotification = GetComponent<AudioSource>();
 
 		participantID = ExperimentSettings.ParticipantID;
+		sessionNumber = ExperimentSettings.SessionNumber;
 
 		TextAsset insPointsFile = Resources.Load("Text/InsertionPoints") as TextAsset;	
 		insertionPoints = JsonHelper.FromJson<ExperimentPosition>(insPointsFile.text);
@@ -198,7 +201,9 @@ public class MainManager : MonoBehaviour {
 		platformParent.transform.position = new Vector3(0,0,0);
 		//RotateLandMarks();	
 		infoText.text = "Please use the joystick to place the platform where it was.\nPress the \"A\" key to confirm.";
-		//platform.GetComponent<Rigidbody>().
+		//platform.GetComponent<Rigidbody>().isKinematic = false;
+		platform.GetComponent<Collider>().isTrigger = false;
+	
 		platform.GetComponent<PlatformMover>().enabled = true;
 	}
 
@@ -219,12 +224,21 @@ public class MainManager : MonoBehaviour {
 	}
 
 	void SetLandMarkTexture(){
-		for(int i=0; i<landMarks.Count; i++){
-			Renderer m_Renderer;
-			m_Renderer =landMarks[i].GetComponent<Renderer>();
-			m_Renderer.material.SetTexture("_MainTex", LandMarkTextures[i+textureCounter]);
+		if(!onTraining){
+			for(int i=0; i<landMarks.Count; i++){
+				Renderer m_Renderer;
+				m_Renderer =landMarks[i].GetComponent<Renderer>();
+				m_Renderer.material.SetTexture("_MainTex", LandMarkTextures[i+textureCounter]);
+			}
+			textureCounter +=4;
+		}else{
+			for(int i=0; i<landMarks.Count; i++){
+				Renderer m_Renderer;
+				m_Renderer =landMarks[i].GetComponent<Renderer>();
+				m_Renderer.material.SetTexture("_MainTex", LandMarkTextures[i*4]);
+			}
 		}
-		textureCounter +=4;
+		
 	}
 
 	void OnPositionSelected(){
@@ -232,13 +246,19 @@ public class MainManager : MonoBehaviour {
 		infoPanel.SetActive(true);
 		infoText.text = "Thank you for placing the platform.";
 		platform.GetComponent<PlatformMover>().enabled = false;
+		//platform.GetComponent<Rigidbody>().isKinematic = true;
+		platform.GetComponent<Collider>().isTrigger = true;
 
+		if(!onTraining){
 		//write data to file
-		PlacementData placement = new PlacementData();
-		placement.participantID = participantID;		
-		placement.blockID = blockID;
-		placement.trajectoryPositions = platformTrajectoryPositions;		
-		placement.export();
+			PlacementData placement = new PlacementData();
+			placement.participantID = participantID;	
+			placement.sessionNumber = sessionNumber;	
+			placement.blockID = blockID;
+			placement.trajectoryPositions = platformTrajectoryPositions;
+			placement.trajectoryTimeStamps = platformTrajectoryTimeStamps;		
+			placement.export();
+		}
 
 		Invoke("StartBlock", delayBetweenTrials);		
 	}
@@ -260,7 +280,12 @@ public class MainManager : MonoBehaviour {
 			}
 		}else{
 			infoPanel.SetActive(true);
-			infoText.text = "This is the end of the experiment. Thank you for participating.";
+			if(!onTraining){
+				infoText.text = "This is the end of the experiment. Thank you for participating.";
+			}else{
+				infoText.text = "This is the end of the training. Thank you.";
+			}
+			
 		}
 		
 		blockCounter-=1;
@@ -331,19 +356,25 @@ public class MainManager : MonoBehaviour {
 	void InsertPlayer(){
 		//read position from file and insert player into next position
 		int insertionPt = blockMappings[blockID].trials[trialCounter-1];
-		int x = insertionPoints[insertionPt-1].posX;
-		int z = insertionPoints[insertionPt-1].posZ;
+		float x = insertionPoints[insertionPt-1].posX;
+		float z = insertionPoints[insertionPt-1].posZ;
 		Vector3 newPosition = new Vector3(x,0.5f,z);
 		transform.position = newPosition;
 		trialInsertionPoint = newPosition;
 	}
 
 	void PositionPlatform(){
-		int x = platformPositions[blockCounter-1].posX;
-		int z = platformPositions[blockCounter-1].posZ;
+		float x = platformPositions[blockCounter-1].posX;
+		float z = platformPositions[blockCounter-1].posZ;
 
 		Vector3 newPosition = new Vector3(x,0,z);
-		platformParent.transform.position = newPosition;				
+
+		if(onTraining){
+			platformParent.transform.position = Vector3.zero;
+		}else{
+			platformParent.transform.position = newPosition;	
+		}
+					
 	}	
 
 	void trialTimeOut(){
@@ -363,17 +394,20 @@ public class MainManager : MonoBehaviour {
 		if(!onTraining){
 			Trajectory traj = new Trajectory();
 			traj.participantID = participantID;
+			traj.sessionNumber = sessionNumber;
 			traj.trialID = trialID;
 			traj.blockID = blockID;
 			traj.trajectoryPositions = trajectoryPositions;
+			traj.trajectoryTimeStamps = trajectoryTimeStamps;
 			traj.yawData = yawData;		
 			traj.export();
 
 			Trial trial = new Trial();
 			trial.participantID = participantID;
+			trial.sessionNumber = sessionNumber;
 			trial.trialID = trialID;
 			trial.blockID = blockID;
-			trial.FOVCondition = (FOVRestricted?"RY":"RN");
+			trial.FOVCondition = (ExperimentSettings.FovRestriction?"RY":"RN");
 			trial.startTime = trialStartTime;
 			trial.endTime = trialStartTime.Add(new System.TimeSpan(0,0,0,(int)elapsed));
 			trial.completionTime = elapsed;

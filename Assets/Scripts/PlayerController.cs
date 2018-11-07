@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     void Start(){
         Time.timeScale = 1.0f;
     }
-    void FixedUpdate()
+    void Update()
     {        
         Vector3 newPos;
        

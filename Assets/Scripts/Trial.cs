@@ -7,6 +7,7 @@ using System.IO;
 public class Trial {
 	public int trialID;
 	public string participantID;
+	public string sessionNumber;
 	public int blockID;
 	public string FOVCondition;	
 	public Vector3 platformLocation;
@@ -29,6 +30,7 @@ public class Trial {
         if(!File.Exists(fileName)){			
 			//add csv headers			
 			sb.Append("ParticipantID,");
+			sb.Append("SessionNumber,");
 			sb.Append("BlockID,");
 			sb.Append("trialID,");
 			sb.Append("FOVCondition,");	
@@ -37,9 +39,23 @@ public class Trial {
 			sb.Append("CompletionTime,");
 			sb.Append("PlatformLocation.x,PlatformLocation.z,");
 			sb.Append("InsertionPoint.x,InsertionPoint.z\n");
+
+			sb.Append(participantID).Append(",");
+			sb.Append(sessionNumber).Append(",");
+			sb.Append(blockID).Append(",");
+			sb.Append(trialID).Append(",");
+			sb.Append(FOVCondition).Append(",");	
+			sb.Append(startTime.ToString()).Append(",");	
+			sb.Append(endTime.ToString()).Append(",");
+			sb.Append(completionTime).Append(",");
+			sb.Append(platformLocation.x).Append(",");
+			sb.Append(platformLocation.z).Append(",");
+			sb.Append(insertionPoint.x).Append(",");
+			sb.Append(insertionPoint.z).Append("\n");  
 		}else{			
 			//add data
 			sb.Append(participantID).Append(",");
+			sb.Append(sessionNumber).Append(",");
 			sb.Append(blockID).Append(",");
 			sb.Append(trialID).Append(",");
 			sb.Append(FOVCondition).Append(",");	

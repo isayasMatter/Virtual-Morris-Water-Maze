@@ -19,6 +19,7 @@ public class Trajectory {
         sb.Append(Application.dataPath);
         sb.Append(Path.AltDirectorySeparatorChar).Append("ExperimentData").Append(Path.AltDirectorySeparatorChar);
         sb.Append("P").Append(participantID).Append("_");
+        sb.Append("S").Append(sessionNumber).Append("_");
         sb.Append("B").Append(blockID).Append("_");
         sb.Append("T").Append(trialID);        
         sb.Append(".csv");
@@ -29,6 +30,7 @@ public class Trajectory {
         sb = new StringBuilder();
 
         sb.Append("ParticipantID,");
+        sb.Append("Session-number,");
 		sb.Append("BlockID,");
 		sb.Append("trialID,");
         sb.Append("time-stamp,");
@@ -39,6 +41,7 @@ public class Trajectory {
         foreach(Vector3 point in trajectoryPositions)        
         {
             sb.Append(participantID).Append(",");
+            sb.Append(sessionNumber).Append(",");
 		    sb.Append(blockID).Append(",");
 		    sb.Append(trialID).Append(",");
             sb.Append(trajectoryTimeStamps[index]).Append(",");
