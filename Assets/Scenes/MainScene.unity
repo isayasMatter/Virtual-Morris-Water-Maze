@@ -1005,10 +1005,10 @@ MonoBehaviour:
   sessionNumber: 00
   trialID: 0
   blockID: 0
-  trialDuration: 20
-  delayBetweenTrials: 5
-  numberOfTrials: 6
-  numberOfBlocks: 4
+  trialDuration: 5
+  delayBetweenTrials: 1
+  numberOfTrials: 2
+  numberOfBlocks: 6
   trialCounter: 0
   numberOfLandMarks: 4
   placementTaskelevation: 40
@@ -1303,8 +1303,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
 --- !u!1 &1404262586
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,8 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     public Camera mainCam;
     public float speed = 10.0f;
-    public Rigidbody rb;
-
+    
     void Start(){
         Time.timeScale = 1.0f;
     }
@@ -21,7 +20,7 @@ public class PlayerController : MonoBehaviour
             newPos = mainCam.transform.forward * verticalInput; 
             newPos.y = 0;          
             transform.position += newPos;
-            //rb.MovePosition(transform.position + newPos);
+           
            
         }
 
@@ -31,8 +30,8 @@ public class PlayerController : MonoBehaviour
           
             newPos = mainCam.transform.right * horizontalInput;
             newPos.y = 0;     
-            transform.position += newPos;       
-            //rb.MovePosition(transform.position + newPos);
+            transform.position += newPos;      
+            
             
         }
             

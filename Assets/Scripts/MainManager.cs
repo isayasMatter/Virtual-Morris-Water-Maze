@@ -46,6 +46,8 @@ public class MainManager : MonoBehaviour {
 	public int placementTaskelevation = 100;
 	private int blockCounter;
 
+	private int[] fovBlockOrder = {5,3,2,6,4,1};
+	private int[] noFovBlockOrder = {1,5,4,2,3,6};
 
 	private Trial currentTrial;
 	private Vector3 trialInsertionPoint;
@@ -207,6 +209,9 @@ public class MainManager : MonoBehaviour {
 		platform.GetComponent<PlatformMover>().enabled = true;
 	}
 
+	/**
+	Rotates landmarks for better view during placement task.
+	 */
 	void RotateLandMarks(){
 		for(int i=0; i<landMarks.Count; i++){
 			landMarks[i].transform.Rotate(0,0,90);
@@ -223,6 +228,9 @@ public class MainManager : MonoBehaviour {
 
 	}
 
+	/**
+	Changes the texture (the images) in the landmarks at the start of every block
+	 */
 	void SetLandMarkTexture(){
 		if(!onTraining){
 			for(int i=0; i<landMarks.Count; i++){
@@ -246,7 +254,7 @@ public class MainManager : MonoBehaviour {
 		infoPanel.SetActive(true);
 		infoText.text = "Thank you for placing the platform.";
 		platform.GetComponent<PlatformMover>().enabled = false;
-		//platform.GetComponent<Rigidbody>().isKinematic = true;
+		
 		platform.GetComponent<Collider>().isTrigger = true;
 
 		if(!onTraining){
@@ -266,10 +274,22 @@ public class MainManager : MonoBehaviour {
 	void StartBlock(){
 		trialCounter = numberOfTrials;
 		blockID = numberOfBlocks - blockCounter;
+		
 
 		if(AreThereMoreBlocks()){
+			//get the next order from a predefined list
+			if(ExperimentSettings.FovRestriction) blockID = fovBlockOrder[blockID];
+			else blockID = noFovBlockOrder[blockID];
+
+			Debug.Log("started block: " + blockID);
+
+			//reset platform position to orignal local position (with respect to parent)
 			platform.transform.localPosition = Vector3.zero;
+
+			//reset camera rotation to 0 (with respect to parent)
 			cameraParent.transform.localRotation = Quaternion.Euler(0,0,0);
+
+			//position the platform and set landmark textures
 			PositionPlatform();
 			SetLandMarkTexture();
 
@@ -281,9 +301,9 @@ public class MainManager : MonoBehaviour {
 		}else{
 			infoPanel.SetActive(true);
 			if(!onTraining){
-				infoText.text = "This is the end of the experiment. Thank you for participating.";
+				infoText.text = "This is the end of the experiment, please inform the experiment conductor.";
 			}else{
-				infoText.text = "This is the end of the training. Thank you.";
+				infoText.text = "This is the end of the training, please inform the experiment conductor.";
 			}
 			
 		}
@@ -355,17 +375,19 @@ public class MainManager : MonoBehaviour {
 
 	void InsertPlayer(){
 		//read position from file and insert player into next position
-		int insertionPt = blockMappings[blockID].trials[trialCounter-1];
+		int insertionPt = blockMappings[blockID-1].trials[trialCounter-1];
 		float x = insertionPoints[insertionPt-1].posX;
 		float z = insertionPoints[insertionPt-1].posZ;
+
 		Vector3 newPosition = new Vector3(x,0.5f,z);
+		
 		transform.position = newPosition;
 		trialInsertionPoint = newPosition;
 	}
 
 	void PositionPlatform(){
-		float x = platformPositions[blockCounter-1].posX;
-		float z = platformPositions[blockCounter-1].posZ;
+		float x = platformPositions[blockID-1].posX;
+		float z = platformPositions[blockID-1].posZ;
 
 		Vector3 newPosition = new Vector3(x,0,z);
 
