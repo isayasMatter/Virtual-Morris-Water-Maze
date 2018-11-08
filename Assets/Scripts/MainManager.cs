@@ -107,7 +107,9 @@ public class MainManager : MonoBehaviour {
 
 		if(ExperimentSettings.OnTraining){
 			onTraining = true;
-			numberOfBlocks = 1;			
+			numberOfBlocks = 1;	
+			numberOfTrials = 3;
+			trialDuration = 20;		
 		}
 
 		blockCounter = numberOfBlocks;	
